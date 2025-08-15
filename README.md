@@ -169,4 +169,4 @@ Los archivos se generarán en la carpeta `dist/`.
 
 ## Licencia
 
-Este proyecto es propiedad de UNISEM S.A.
+Este proyecto es propiedad de MATIAS ROCHA.
