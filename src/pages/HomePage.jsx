@@ -21,20 +21,6 @@ const Noticias = () => (
   </section>
 );
 
-const Contacto = () => (
-  <section id="contacto" className="py-20 bg-white">
-    <div className="container px-4 mx-auto">
-      <div className="mb-16 text-center" data-aos="fade-up">
-        <h2 className="mb-4 text-4xl font-bold text-unisem-blue-navy">Contacto</h2>
-        <p className="max-w-2xl mx-auto text-xl text-gray-600">Estamos disponibles 24/7 para atenderte</p>
-      </div>
-      <div className="text-center">
-        <p>Componente Contacto - Se implementará en el siguiente paso</p>
-      </div>
-    </div>
-  </section>
-);
-
 const HomePage = () => {
   return (
     <>
@@ -42,7 +28,6 @@ const HomePage = () => {
       <Planes />
       <DetallePlanes />
       <Noticias />
-      <Contacto />
     </>
   );
 };
