@@ -42,7 +42,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-600 mt-8 pt-8 text-center text-gray-300">
-          <p>&copy; 2024 UNISEM S.A. Todos los derechos reservados.</p>
+          <p>&copy; 2025 Esto esta realizado por Matias Rocha.</p>
         </div>
       </div>
     </footer>
