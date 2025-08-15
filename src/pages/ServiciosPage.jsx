@@ -1,9 +1,11 @@
 import React from 'react';
 import useServices from '../hooks/useServices';
-import { serviciosPersonas } from '../data/serviciosData.jsx';
+import useSmoothScroll from '../hooks/useSmoothScroll';
+import { serviciosPersonas, serviciosEmpresas, serviciosObrasSociales } from '../data/serviciosData.jsx';
 
 const ServiciosPage = () => {
   const { toggleService, isServiceExpanded } = useServices();
+  useSmoothScroll(); // Hook para scroll suave
 
   const ServiceCard = ({ service }) => {
     const isExpanded = isServiceExpanded(service.id);
@@ -30,8 +32,8 @@ const ServiciosPage = () => {
             </button>
           </div>
           <h3 className="text-xl font-semibold text-unisem-blue-navy mb-2">{service.title}</h3>
-          <div className={`service-content transition-all duration-300 ${isExpanded ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-            <p className="text-gray-600">{service.description}</p>
+          <div className={`service-content transition-all duration-300 ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+            <p className="text-gray-600 leading-relaxed">{service.description}</p>
           </div>
         </div>
       </div>
@@ -56,7 +58,7 @@ const ServiciosPage = () => {
         <div className="container mx-auto px-4">
           
           {/* Sección PERSONAS */}
-          <div className="mb-32" data-aos="fade-up">
+          <div id="personas" className="mb-32 scroll-mt-32" data-aos="fade-up">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-unisem-blue-navy mb-4">PERSONAS</h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">Encontrá la cobertura médica pensada para vos y tu familia con planes a tu medida.</p>
@@ -71,25 +73,41 @@ const ServiciosPage = () => {
             </div>
           </div>
 
-          {/* Sección EMPRESAS - Placeholder */}
-          <div className="mb-32" data-aos="fade-up">
+          {/* Sección EMPRESAS */}
+          <div id="empresas" className="mb-32 scroll-mt-32" data-aos="fade-up">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-unisem-blue-navy mb-4">EMPRESAS</h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">Servicios corporativos para empresas y organizaciones.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-unisem-blue-navy mb-4">EMPRESAS Y COMERCIOS</h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">Tenemos un plan a la medida de tu empresa o comercio.</p>
             </div>
-            <div className="text-center">
-              <p>Componente Servicios Empresas - Se implementará en el siguiente paso</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {serviciosEmpresas.map((service, index) => (
+                <div key={service.id} data-aos="fade-up" data-aos-delay={(index + 1) * 100}>
+                  <ServiceCard service={service} />
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Sección EVENTOS - Placeholder */}
-          <div className="mb-32" data-aos="fade-up">
+          {/* Sección OBRAS SOCIALES */}
+          <div id="obras-sociales" className="mb-32 scroll-mt-32" data-aos="fade-up">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-unisem-blue-navy mb-4">EVENTOS</h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">Cobertura médica para eventos y actividades especiales.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-unisem-blue-navy mb-4">OBRAS SOCIALES Y PREPAGAS</h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">Contamos con beneficios exclusivos para entidades de salud.</p>
             </div>
-            <div className="text-center">
-              <p>Componente Servicios Eventos - Se implementará en el siguiente paso</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {serviciosObrasSociales.map((service, index) => (
+                <div key={service.id} data-aos="fade-up" data-aos-delay={(index + 1) * 100}>
+                  <ServiceCard service={service} />
+                </div>
+              ))}
+            </div>
+            
+            <div className="text-center mt-12" data-aos="fade-up">
+              <p className="text-lg text-gray-600 max-w-4xl mx-auto">
+                Nuestro conocimiento y experiencia en el sector nos permite brindar una cobertura a la medida de cada organización.
+              </p>
             </div>
           </div>
 
