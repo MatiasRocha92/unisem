@@ -1,4 +1,3 @@
-Crea una pagina de servicios que contenga los tipos de servicios que birnda la empresa. Asi mismo cada servicio tendra su titulo y haciendo click se despliega la caracteristica o descricpcion del servicio dejame rellenar las descripciones o caracteristicas a mi, hay dos secciones de servicios que son para personas y para comercios.
 SERVICIOS DE SALUD DE EXCELENCIA
 Nuestros servicios
 
