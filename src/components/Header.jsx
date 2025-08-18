@@ -45,6 +45,19 @@ const Header = ({ onEmergencyClick }) => {
     };
   }, []);
 
+  // Efecto para bloquear el scroll del body cuando el menú móvil está abierto
+  useEffect(() => {
+    if (isMobile && isOpen) {
+      document.body.classList.add('menu-open');
+    } else {
+      document.body.classList.remove('menu-open');
+    }
+
+    return () => {
+      document.body.classList.remove('menu-open');
+    };
+  }, [isMobile, isOpen]);
+
   const navLinks = [
     { to: '/', text: 'Inicio' },
   ];
@@ -358,75 +371,111 @@ const Header = ({ onEmergencyClick }) => {
 
       {/* Menú Mobile - Solo en móviles */}
       {isMobile && (
-        <div className={`fixed top-0 left-0 w-full h-full bg-white/95 backdrop-blur-md pt-20 p-8 transition-all duration-500 ease-in-out z-[998] ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
-          <nav className="flex flex-col items-center space-y-8">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                className={({ isActive }) => `text-3xl font-bold tracking-wide transition-all duration-300 transform hover:scale-110 ${isActive ? 'text-unisem-orange' : 'text-gray-800 hover:text-unisem-orange'}`}
+        <>
+          {/* Overlay de fondo para bloquear interacción */}
+          <div 
+            className={`fixed inset-0 bg-black/70 backdrop-blur-sm transition-all duration-500 ease-in-out z-[997] ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+            onClick={() => setIsOpen(false)}
+          />
+          
+          {/* Menú móvil */}
+          <div className={`fixed top-0 left-0 w-full h-full bg-white transition-all duration-500 ease-in-out z-[998] mobile-menu-opaque mobile-menu-solid ${isOpen ? 'translate-x-0 opacity-100 pointer-events-auto' : '-translate-x-full opacity-0 pointer-events-none'}`}>
+            {/* Header del menú móvil */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-white mobile-menu-opaque">
+              <div className="flex items-center">
+                <img src={unisemLogo} alt="Logo UNISEM" className="w-auto h-10" />
+              </div>
+              <button
                 onClick={() => setIsOpen(false)}
+                className="p-2 text-gray-600 hover:text-unisem-orange transition-colors"
+                aria-label="Cerrar menú"
               >
-                {link.text}
-              </NavLink>
-            ))}
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
             
-            {/* Servicios en móvil */}
-            <div className="text-center">
-              <h3 className="mb-4 text-2xl font-bold text-unisem-blue-navy">Servicios</h3>
-              <div className="space-y-4">
-                {servicesDropdownItems.map((item) => (
-                  <button
-                    key={item.to}
-                    onClick={() => {
-                      setIsOpen(false);
-                      handleServicesDropdownItemClick(item);
-                    }}
-                    className="block w-full px-6 py-3 text-lg font-semibold text-gray-700 transition-all duration-300 transform bg-white/50 rounded-xl hover:bg-unisem-orange hover:text-white hover:scale-105"
-                  >
-                    {item.icon} {item.text}
-                  </button>
-                ))}
-              </div>
-            </div>
+            {/* Contenido del menú con scroll */}
+            <div className="h-[calc(100vh-80px)] overflow-y-auto pb-8 mobile-menu-scroll bg-white mobile-menu-opaque">
+              <nav className="flex flex-col space-y-6 px-6 pt-6">
+                {/* Enlaces principales */}
+                <div className="space-y-4">
+                  {navLinks.map((link) => (
+                    <NavLink
+                      key={link.to}
+                      to={link.to}
+                      className={({ isActive }) => `block text-xl font-bold tracking-wide transition-all duration-300 transform hover:scale-105 ${isActive ? 'text-unisem-orange' : 'text-gray-800 hover:text-unisem-orange'}`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.text}
+                    </NavLink>
+                  ))}
+                </div>
+                
+                {/* Servicios en móvil */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-bold text-unisem-blue-navy border-b border-gray-200 pb-2">Servicios</h3>
+                  <div className="space-y-3">
+                    {servicesDropdownItems.map((item) => (
+                      <button
+                        key={item.to}
+                        onClick={() => {
+                          setIsOpen(false);
+                          handleServicesDropdownItemClick(item);
+                        }}
+                        className="block w-full px-4 py-3 text-base font-semibold text-gray-700 transition-all duration-300 transform bg-white/80 rounded-xl hover:bg-unisem-orange hover:text-white hover:scale-105 shadow-sm text-left"
+                      >
+                        <span className="mr-3">{item.icon}</span>
+                        {item.text}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-            {/* Planes en móvil */}
-            <div className="text-center">
-              <h3 className="mb-4 text-2xl font-bold text-unisem-blue-navy">Planes</h3>
-              <div className="space-y-4">
-                {planesDropdownItems.map((item) => (
-                  <button
-                    key={item.to}
-                    onClick={() => {
-                      setIsOpen(false);
-                      handlePlanesDropdownItemClick(item);
-                    }}
-                    className="block w-full px-6 py-3 text-lg font-semibold text-gray-700 transition-all duration-300 transform bg-white/50 rounded-xl hover:bg-unisem-orange hover:text-white hover:scale-105"
-                  >
-                    {item.icon} {item.text}
-                  </button>
-                ))}
-              </div>
-            </div>
+                {/* Planes en móvil */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-bold text-unisem-blue-navy border-b border-gray-200 pb-2">Planes</h3>
+                  <div className="space-y-3">
+                    {planesDropdownItems.map((item) => (
+                      <button
+                        key={item.to}
+                        onClick={() => {
+                          setIsOpen(false);
+                          handlePlanesDropdownItemClick(item);
+                        }}
+                        className="block w-full px-4 py-3 text-base font-semibold text-gray-700 transition-all duration-300 transform bg-white/80 rounded-xl hover:bg-unisem-orange hover:text-white hover:scale-105 shadow-sm text-left"
+                      >
+                        <span className="mr-3">{item.icon}</span>
+                        {item.text}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-            <Link 
-              to="/contacto" 
-              className="px-8 py-4 text-xl font-bold text-white transition-all duration-300 transform border-2 rounded-xl bg-gradient-to-r from-unisem-blue-dark to-unisem-blue-navy border-unisem-blue-dark hover:shadow-xl hover:scale-105" 
-              onClick={() => setIsOpen(false)}
-            >
-              📞 Contacto
-            </Link>
-            <button 
-              className="inline-flex items-center justify-center px-8 py-4 text-xl font-bold text-white transition-all duration-300 transform shadow-xl bg-gradient-to-r from-red-600 to-red-500 hover:shadow-2xl rounded-xl hover:scale-105"
-              onClick={() => {
-                onEmergencyClick();
-                setIsOpen(false);
-              }}
-            >
-              🚨 EMERGENCIA
-            </button>
-          </nav>
-        </div>
+                {/* Botones de acción */}
+                <div className="space-y-4 pt-4 border-t border-gray-200">
+                  <Link 
+                    to="/contacto" 
+                    className="block w-full px-6 py-4 text-lg font-bold text-white transition-all duration-300 transform border-2 rounded-xl bg-gradient-to-r from-unisem-blue-dark to-unisem-blue-navy border-unisem-blue-dark hover:shadow-xl hover:scale-105 text-center" 
+                    onClick={() => setIsOpen(false)}
+                  >
+                    📞 Contacto
+                  </Link>
+                  <button 
+                    className="block w-full px-6 py-4 text-lg font-bold text-white transition-all duration-300 transform shadow-xl bg-gradient-to-r from-red-600 to-red-500 hover:shadow-2xl rounded-xl hover:scale-105"
+                    onClick={() => {
+                      onEmergencyClick();
+                      setIsOpen(false);
+                    }}
+                  >
+                    🚨 EMERGENCIA
+                  </button>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </>
       )}
     </header>
   );
