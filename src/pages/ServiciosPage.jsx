@@ -43,25 +43,35 @@ const ServiciosPage = () => {
 
   return (
     <>
-      {/* Sección Hero con imagen de fondo */}
-      <section 
-        id="hero" 
-        className="relative flex items-center justify-center h-screen bg-center bg-no-repeat bg-cover"
-        style={{ backgroundImage: `url(${ambulanciaImage})` }}
-      >
+      {/* Sección Hero con imagen de fondo y parallax */}
+      <section id="hero" className="relative h-screen overflow-hidden">
+        {/* Imagen de fondo con parallax CSS puro */}
+        <div 
+          className="absolute inset-0 parallax-css-pure"
+          style={{ 
+            backgroundImage: `url(${ambulanciaImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed'
+          }}
+        />
+        
         {/* Capa oscura semitransparente para mejorar el contraste del texto */}
         <div className="absolute inset-0 bg-black/50"></div>
         
-        <div className="container relative z-10 px-4 mx-auto">
-          <div className="text-center text-white" data-aos="fade-up">
-            <h1 className="mb-6 text-4xl font-bold md:text-6xl">Servicios de Salud de Excelencia</h1>
-            <p className="max-w-3xl mx-auto mb-8 text-xl md:text-2xl">Nuestros servicios están diseñados para brindarte la mejor atención médica cuando más la necesitás</p>
-            <a 
-              href="#servicios" 
-              className="px-8 py-3 text-lg font-bold text-white transition duration-300 rounded-full bg-unisem-orange hover:bg-orange-600"
-            >
-              Ver Servicios
-            </a>
+        <div className="relative z-10 flex items-center justify-center h-screen">
+          <div className="container px-4 mx-auto">
+            <div className="text-center text-white" data-aos="fade-up">
+              <h1 className="mb-6 text-4xl font-bold md:text-6xl">Servicios de Salud de Excelencia</h1>
+              <p className="max-w-3xl mx-auto mb-8 text-xl md:text-2xl">Nuestros servicios están diseñados para brindarte la mejor atención médica cuando más la necesitás</p>
+              <a 
+                href="#servicios" 
+                className="px-8 py-3 text-lg font-bold text-white transition duration-300 rounded-full bg-unisem-orange hover:bg-orange-600 transform hover:scale-105"
+              >
+                Ver Servicios
+              </a>
+            </div>
           </div>
         </div>
       </section>

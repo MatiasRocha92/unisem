@@ -198,6 +198,57 @@ input[type="date"]:hover {
     overflow: hidden;
 }
 
+/* Efectos Parallax con react-parallax */
+.react-parallax-bg {
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+/* Parallax CSS puro más suave */
+.parallax-css-pure {
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Optimización para dispositivos móviles */
+@media (max-width: 768px) {
+    .react-parallax-bg,
+    .parallax-css-pure {
+        background-attachment: scroll !important;
+    }
+}
+
+/* Mejorar la transición del parallax */
+.parallax-smooth-transition {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+/* Efecto parallax con blur opcional */
+.parallax-blur-effect {
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+}
+
+/* Suavizar el movimiento del parallax */
+.parallax-smooth-movement {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Efecto parallax muy sutil */
+.parallax-subtle {
+    transition: transform 0.5s ease-out;
+    will-change: transform;
+}
+
 
 
 
