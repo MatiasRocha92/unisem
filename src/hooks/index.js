@@ -3,4 +3,5 @@ export { default as useSmoothScroll } from './useSmoothScroll';
 export { default as useEmergencyButton } from './useEmergencyButton';
 export { default as useServices } from './useServices';
 export { default as useModal } from './useModal';
+export { default as useScrollToTop } from './useScrollToTop';
 

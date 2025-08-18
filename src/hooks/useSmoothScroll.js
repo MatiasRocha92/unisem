@@ -8,19 +8,21 @@ const useSmoothScroll = () => {
       if (hash) {
         const element = document.querySelector(hash);
         if (element) {
-          // Esperar un poco para que la página se cargue completamente
+          // Esperar un poco más para que la página se cargue completamente
           setTimeout(() => {
             element.scrollIntoView({
               behavior: 'smooth',
               block: 'start'
             });
-          }, 100);
+          }, 300); // Aumentado el tiempo para evitar conflictos
         }
       }
     };
 
-    // Manejar scroll al cargar la página
-    handleHashScroll();
+    // Solo manejar scroll al hash si existe uno
+    if (window.location.hash) {
+      handleHashScroll();
+    }
 
     // Manejar cambios en el hash
     const handleHashChange = () => {
